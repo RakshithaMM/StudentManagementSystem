@@ -1,0 +1,32 @@
+services:
+  student-app:
+    build: .
+    container_name: student-app
+
+    ports:
+      - "5000:5000"
+
+    depends_on:
+      - db
+
+    restart: always
+
+  db:
+    image: postgres:16
+    container_name: postgres-db
+
+    environment:
+      POSTGRES_DB: studentdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: always
+
+volumes:
+  postgres_data:
